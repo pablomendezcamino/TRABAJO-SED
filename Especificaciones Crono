@@ -5,3 +5,11 @@ Objetivos a cumplir
 -Boton de reset y inicio
 
 Cuenta salida por BCD
+
+Entidades
+-Debouncer
+-FMSM
+-fmsS
+-decoder
+-BCD
+-contador
