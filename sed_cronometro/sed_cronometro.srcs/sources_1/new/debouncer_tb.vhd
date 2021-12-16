@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date: 05.12.2021 18:32:29
+-- Create Date: 16.12.2021 20:49:15
 -- Design Name: 
--- Module Name: debounce - Behavioral
+-- Module Name: debuoncer_tb - Behavioral
 -- Project Name: 
 -- Target Devices: 
 -- Tool Versions: 
@@ -31,26 +31,28 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
+entity debouncer_tb is
+end debouncer_tb;
 
-entity debounce is
+architecture Behavioral of debouncer_tb is
+component debouncer is
     Port (
         DATA: in std_logic;
         CLK : in std_logic;
-        OP_DATA : out std_logic);
-end debounce ;
+        OP_DATA : out std_logic
+    );
+end component;
 
-architecture Behavioral of debounce is
-    Signal OP1, OP2, OP3: std_logic;
+        signal DATA: std_logic := '0';
+        signal CLK : std_logic := '0';
+        signal OP_DATA : std_logic;
+        constant clk_freq : positive := 1000;
+        constant clk_period : time := 1*sec/clk_freq;
 begin
-    Process(CLK)
-    begin
-        If rising_edge(CLK) then
-            OP1 <= DATA;
-            OP2 <= OP1;
-            OP3 <= OP2;
-        end if;
-    end process;
-    OP_DATA <= OP1 and OP2 and OP3;
+uut: debouncer
+port map( DATA => DATA, CLK => CLK, OP_DATA => OP_DATA);
+
+CLK <= not CLK after 0.5 * clk_period;
+DATA <= not DATA after 0.75 * clk_period;
+
 end architecture Behavioral;
