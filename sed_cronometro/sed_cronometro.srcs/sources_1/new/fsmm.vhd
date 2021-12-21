@@ -24,10 +24,10 @@ begin
         if RESET = '0' then
             next_state <= S0;
         elsif rising_edge(clk)then
-            current_state<=next_state;
+            current_state <= next_state;
         end if;
     end process;
-    nextstate_decod: process (START,SLAVE_START,SLAVE_FINISH, current_state)
+    nextstate_decod: process (START,SLAVE_START, SLAVE_FINISH, current_state)
     begin
         next_state <= current_state;
         case current_state is
@@ -59,10 +59,11 @@ begin
             when S0 =>
                 ce <= '0';
             when S1 =>
+            
             when S2 =>
                 ce <= '1';
             when S3 =>
-                SLAVE_START<= '1';
+                SLAVE_START <= '1';
                 ce <= '1';
             when S4 =>
                 ce <= '1';

@@ -1,0 +1,15 @@
+#-----------------------------------------------------------
+# Vivado v2021.1 (64-bit)
+# SW Build 3247384 on Thu Jun 10 19:36:33 MDT 2021
+# IP Build 3246043 on Fri Jun 11 00:30:35 MDT 2021
+# Start of session at: Wed Dec 22 00:17:34 2021
+# Process ID: 23652
+# Current directory: C:/Users/franc/vivado/trabajo/contador_segmentos
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent12320 C:\Users\franc\vivado\trabajo\contador_segmentos\contador_segmentos.xpr
+# Log file: C:/Users/franc/vivado/trabajo/contador_segmentos/vivado.log
+# Journal file: C:/Users/franc/vivado/trabajo/contador_segmentos\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project C:/Users/franc/vivado/trabajo/contador_segmentos/contador_segmentos.xpr
+update_compile_ordsource i3_top_tb.tcl
+

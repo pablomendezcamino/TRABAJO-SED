@@ -1,0 +1,10 @@
+# compile vhdl design source files
+vhdl xil_defaultlib  \
+"../../../../../top_ contador/top_ contador.srcs/sources_1/new/bin2_segments.vhd" \
+"../../../../../top_ contador/top_ contador.srcs/sources_1/new/count.vhd" \
+"../../../../contador_segmentos.srcs/sources_1/new/i3_top.vhd" \
+"../../../../../top_ contador/top_ contador.srcs/sources_1/new/num_to_min_and_seg.vhd" \
+"../../../../contador_segmentos.srcs/sources_1/new/i3_top_tb.vhd" \
+
+# Do not sort compile order
+nosort
