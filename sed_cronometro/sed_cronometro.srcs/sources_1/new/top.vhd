@@ -35,7 +35,8 @@ ARCHITECTURE STRUCTURAL OF TOP IS
             CLK   : in  std_logic;
             RST_N : in  std_logic;
             start : in  std_logic;
-            delay : in  unsigned(3 downto 0);
+            delay : in  unsigned(15 downto 0); --
+            prescaler : in  unsigned(15 downto 0);
             DONE  : out std_logic
         );
     END COMPONENT;
@@ -85,6 +86,13 @@ ARCHITECTURE STRUCTURAL OF TOP IS
             tens_min : out STD_LOGIC_VECTOR(3 downto 0)
         );
     END COMPONENT;
+       COMPONENT FREC_DIVIDER
+        PORT (
+            entrada: in  STD_LOGIC;
+            reset  : in  STD_LOGIC;
+            salida : out STD_LOGIC
+        );
+    END COMPONENT;
     signal START_deb : std_logic;
     signal RESET_deb : std_logic;
     signal LOAD_deb : std_logic;
@@ -97,6 +105,7 @@ ARCHITECTURE STRUCTURAL OF TOP IS
     signal ones_min :  STD_LOGIC_VECTOR(3 downto 0);
     signal tens_min :  STD_LOGIC_VECTOR(3 downto 0);
     signal NUMBER_OUT :  STD_LOGIC_VECTOR(3 downto 0);
+    signal clk_out : std_logic;
 BEGIN
     Inst_debouncer_START: DEBOUNCER PORT MAP (
             CLK => CLK,
@@ -131,7 +140,8 @@ BEGIN
             CLK   => CLK,
             RST_N => RESET_deb,
             start => SLAVE_START,
-            delay => X"100",    --ARREGLAR PRESCALLER
+            delay => X"10000",   --ARREGLAR PRESCALLER
+            prescaler => X"1000",
             DONE  => SLAVE_FINISH
         );
     Inst_COUNTER: COUNTER PORT MAP (
@@ -152,7 +162,7 @@ BEGIN
         );
     Inst_BCD_CONTROLER: BCD_CONTROLER PORT MAP (
             ce => '1',
-            clk => CLK, --DEBERIA SER OTRO RELOJ CON DIV_FREC
+            clk => clk_out, --DEBERIA SER OTRO RELOJ CON DIV_FREC
             code => CODE,
             tens_min => tens_min,
             ones_min => ones_min,
@@ -163,5 +173,10 @@ BEGIN
     Inst_DECODER: DECODER PORT MAP (
             NUMBER => NUMBER_OUT,
             led => LED
+        );
+    Inst_FREC_DIVIDER: FREC_DIVIDER PORT MAP (
+            entrada=> CLK,
+            reset  => '0',
+            salida => clk_out
         );
 end structural;

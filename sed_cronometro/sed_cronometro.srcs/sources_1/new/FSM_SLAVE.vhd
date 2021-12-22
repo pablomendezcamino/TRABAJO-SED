@@ -27,13 +27,15 @@ entity FSM_SLAVE is
     CLK   : in  std_logic;
     RST_N : in  std_logic;
     start : in  std_logic;
-    delay : in  unsigned(3 downto 0);
+    delay : in  unsigned(15 downto 0); --
+    prescaler : in  unsigned(15 downto 0);
     DONE  : out std_logic
   );
 end FSM_SLAVE;
 
 architecture BEHAVIORAL of FSM_SLAVE is
   signal count : unsigned(delay'range);
+  signal count_i : unsigned(delay'range);
 begin
   DONE <= '1' when count = 0 else '0';
   process (CLK, RST_N)
@@ -42,9 +44,15 @@ begin
       count <= (others => '0');
     elsif rising_edge(CLK) then
       if start = '1' then
-        count <= delay;
+        count <= prescaler;
+        count_i <= delay;
       elsif count /= 0 then
-        count <= count - 1;
+        if count_i /= 0 then
+          count_i <= count_i - 1;
+        elsif count_i = 0 then 
+          count_i<= delay;
+          count <= count -1;    
+        end if;       
       end if;
     end if;
   end process;
