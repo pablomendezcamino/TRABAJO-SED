@@ -6,10 +6,10 @@ USE IEEE.NUMERIC_STD.ALL;
 entity num_to_seg_and_min is
     port(
         NUM  : in STD_LOGIC_VECTOR(12 downto 0);
-        ones_sec : out STD_LOGIC_VECTOR(12 downto 0);
-        tens_sec : out STD_LOGIC_VECTOR(12 downto 0);
-        ones_min : out STD_LOGIC_VECTOR(12 downto 0);
-        tens_min : out STD_LOGIC_VECTOR(12 downto 0)
+        ones_sec : out STD_LOGIC_VECTOR(3 downto 0); --CAMBIO 12 A 3. UNA CIFRA SON 4BITS
+        tens_sec : out STD_LOGIC_VECTOR(3 downto 0);
+        ones_min : out STD_LOGIC_VECTOR(3 downto 0);
+        tens_min : out STD_LOGIC_VECTOR(3 downto 0)
     );
 end num_to_seg_and_min;
 

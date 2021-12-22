@@ -1,24 +1,3 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 14.12.2021 20:23:14
--- Design Name: 
--- Module Name: counter - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
-
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
@@ -32,7 +11,7 @@ use IEEE.NUMERIC_STD.ALL;
 --use UNISIM.VComponents.all;
 
 entity counter is
-    generic(width: positive := 16);
+    generic(width: positive := 15);
     port (
         ce : in std_logic;                                  --count name
         count_in : in std_logic_vector(width downto 0);     --count_int load
@@ -67,4 +46,3 @@ begin
     end process;
     count_out <= std_logic_vector(count_i);
 end Behavioral;
-

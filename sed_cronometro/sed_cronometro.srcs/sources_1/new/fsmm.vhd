@@ -3,7 +3,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity fsmm is  --MASTER FMS
     generic(width: positive :=16);
     port (
-        RESET : in std_logic;         --RESET BUTTON ,RESETS SYSTEM
+        RESET_n : in std_logic;         --RESET BUTTON ,RESETS SYSTEM
         LOAD : in std_logic;          --LOAD BUTTON
         CLK : in std_logic;           --CLK 10MHZ
         START : in std_logic;         --START BUTTON ,STARTS COUNT
@@ -15,13 +15,13 @@ entity fsmm is  --MASTER FMS
     );
 end fsmm;
 architecture behavioral of fsmm is
-    type STATES is (S0, S1, S2, S3, S4); --STATES RESET,LOAD,INIT_COUNT, FIN_COUNT
+    type STATES is (S0, S1, S2, S3, S4); --STATES RESET,LOAD,INIT_COUNT, WAIT
     signal current_state: STATES := S0;
     signal next_state: STATES;
 begin
-    state_register: process (RESET, CLK)
+    state_register: process (RESET_n, CLK)
     begin
-        if RESET = '0' then
+        if RESET_n = '0' then
             next_state <= S0;
         elsif rising_edge(clk)then
             current_state <= next_state;
@@ -66,7 +66,7 @@ begin
                 SLAVE_START <= '1';
                 ce <= '1';
             when S4 =>
-                ce <= '1';
+                ce <= '0';
             when others =>
                 ce <= '0';
         end case;

@@ -4,13 +4,13 @@ USE ieee.std_logic_arith.ALL;
 USE ieee.std_logic_unsigned.ALL;
 ENTITY decoder IS
     PORT (
-        code : IN std_logic_vector(3 DOWNTO 0);
+        NUMBER : IN std_logic_vector(3 DOWNTO 0);
         led : OUT std_logic_vector(6 DOWNTO 0)
     );
 END ENTITY decoder;
 ARCHITECTURE dataflow OF decoder IS
 BEGIN
-    WITH code SELECT
+    WITH NUMBER SELECT
  led <= "0000001" WHEN "0000",
         "1001111" WHEN "0001",
         "0010010" WHEN "0010",
