@@ -1,47 +1,64 @@
-LIBRARY ieee;
-USE ieee.std_logic_1164.ALL;
- 
-ENTITY frec_divider_tb IS
-END frec_divider_tb;
- 
-ARCHITECTURE behavior OF frec_divider_tb IS
-    COMPONENT frec_divider
-    PORT(
-        entrada : IN  std_logic;
-        reset   : IN  std_logic;
-        salida  : OUT std_logic
-    );
-    END COMPONENT;
- 
-    -- Entradas
-    signal entrada : std_logic := '0';
-    signal reset   : std_logic := '0';
-    -- Salidas
-    signal salida  : std_logic;
-    constant entrada_t : time := 50 ns; 
-BEGIN
-    -- Instancia de la unidad bajo prueba.
-    uut: frec_divider PORT MAP (
-        entrada => entrada,
-        reset   => reset,
-        salida  => salida
-    );
- 
-    -- Definición del reloj.
-    entrada_process :process
-        begin
-        entrada <= '0';
-        wait for entrada_t / 2;
-        entrada <= '1';
-        wait for entrada_t / 2;
-    end process;
- 
-    -- Procesamiento de estímulos.
-    estimulos: process
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_unsigned.all;
+use ieee.numeric_std.all;
+
+entity freq_divider_tb is
+end freq_divider_tb;
+
+architecture behavioral of freq_divider_tb is
+
+    component frec_divider Is
+
+        generic( FMHZ: Natural := 8 ); -- FMHZ genérico 8MHz por defecto 
+        port(
+            clock_FMHZ : IN STD_LOGIC; -- Señal de reloj externa. 
+            Reset : IN Std_Logic; -- Reset del Módulo 
+            clock_1Hz : OUT STD_LOGIC -- Salida a 1Hz.
+        );
+    end component frec_divider;
+
+    --Inputs
+    signal clock_FMHZ : std_logic := '0';
+    signal Reset : std_logic := '0';
+
+    --Outputs
+    signal clock_1Hz : std_logic;
+    -- Clock period definitions
+    constant clock_period : time := 10 ns;
+    constant adjclk_period : time := 10 ns;
+begin
+
+    -- Instantiate the Unit Under Test (UUT)
+    uut: frec_divider
+        port map (
+            clock_FMHZ => clock_FMHZ,
+            Reset => Reset,
+            clock_1Hz => clock_1Hz
+        );
+
+    -- Clock process definitions
+    clock_process :process
     begin
-        reset <= '1'; -- Condiciones iniciales.
+        clock_FMHZ <= '0';
+        wait for clock_period / 2;
+        clock_FMHZ <= '1';
+        wait for clock_period / 2;
+    end process;
+
+    stim_proc: process
+    begin
+        wait for 50 ns;
+        Reset <= '0';
         wait for 100 ns;
-        reset <= '0'; -- ¡A trabajar!
+        Reset <= '1';
+        wait for clock_period * 10;
+        -- insert stimulus here 
         wait;
     end process;
-END;
+
+    assert false
+    report "[SUCCESS]: simulation finished."
+    severity failure;
+
+end;
